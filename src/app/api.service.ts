@@ -13,15 +13,14 @@ export class ApiService {
 
   async addTodo(todo: Todo) {
     const { data, error } = await this.supabase
-      .from('todos')
+      .from<Todo>('todos')
       .insert(todo)
     return { data, error };
   }
 
-
   async getTodos() {
     let { data: todos, error } = await this.supabase
-      .from('todos')
+      .from<Todo>('todos')
       .select('*')
       .limit(10)
     return { todos, error };
@@ -48,7 +47,7 @@ export class ApiService {
       .update({ done: todo.done })
       .match({ id: todo.id })
   }
-/*
+
   listenAll() {
     const mySubscription = this.supabase
       .from('todos')
@@ -58,5 +57,4 @@ export class ApiService {
       .subscribe()
     return mySubscription;
   }
-  */
 }
